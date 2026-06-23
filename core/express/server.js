@@ -106,6 +106,7 @@ function Server(serverConfig = {}) {
         body: {
           message: '',
           status: '',
+          code: undefined,
         },
       };
 
@@ -228,9 +229,8 @@ function Server(serverConfig = {}) {
 
         expressResponse.status(responseComponents.statusCode).json(responseComponents.body);
       } catch (error) {
-        const statusCode = !error.isApplicationError
-          ? 500
-          : errorCodeMappings[error.errorCode] || 400;
+        console.log(errorCodeMappings[error.errorCode], error.errorCode);
+        const statusCode = !error.isApplicationError ? 500 : error.errorCode || 400;
 
         const requestLog = createRequestLog(expressRequest);
 
@@ -243,12 +243,13 @@ function Server(serverConfig = {}) {
 
         responseComponents.statusCode = statusCode;
         responseComponents.body.status = 'error';
+        responseComponents.body.code = error.isApplicationError ? (error.code ?? 'UK01') : 'AP01'; // AP01 for non application error UK01 for appl error with no error code
         responseComponents.body.message = error.isApplicationError
           ? error.message
           : 'Some error occured.';
         responseComponents.body.errors = error.details || undefined;
         responseComponents.body.data = error.context;
-
+        console.log(responseComponents);
         expressResponse.status(responseComponents.statusCode).json(responseComponents.body); // Todo: Add a callback config that can be used to handle this in a custom way.
       } finally {
         if (typeof handlerConfiguration.onResponseEnd === 'function') {

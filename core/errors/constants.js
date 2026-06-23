@@ -37,4 +37,29 @@ const ERROR_STATUS_CODE_MAPPING = {
   RATE_LIMIT_ERROR: 429,
 };
 
-module.exports = { ERROR_CODE, ERROR_STATUS_CODE_MAPPING };
+const CUSTOM_ERROR_CODE = {
+  SL02: 'Slug is already taken',
+  AC01: 'access_code is required when access_type is private',
+  AC05: 'access_code can only be set on private cards',
+  AC03: 'This card is private, an access code is required',
+  AC04: 'Invalid access code',
+  NF01: 'Creator Card not found',
+  NF02: 'Creator Card not found',
+};
+
+const CUSTOME_ERROR_CODE_MAPPING = {
+  SL02: 'SLO2',
+  AC01: 'AC01',
+  AC05: 'ACO5',
+  AC03: 'AC03',
+  AC04: 'AC04',
+  NF01: 'NF01',
+  NF02: 'NF02',
+};
+
+module.exports = {
+  ERROR_CODE,
+  ERROR_STATUS_CODE_MAPPING,
+  CUSTOM_ERROR_CODE,
+  CUSTOME_ERROR_CODE_MAPPING,
+};

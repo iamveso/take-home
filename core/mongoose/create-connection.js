@@ -31,6 +31,7 @@ async function createConnection(connectionConfig) {
         connection = await mongoose.createConnection(uri, connectionOptions);
       } else {
         ({ connection } = await mongoose.connect(uri, connectionOptions));
+        console.log('connected');
       }
       connectionResult.connection = connection;
     } catch (e) {

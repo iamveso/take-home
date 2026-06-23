@@ -33,7 +33,8 @@ function createFactory(modelOrName) {
       const createdData = await new Model(cloneData).save(options);
 
       // ensure we get back a simple Javascript Object.
-      return extractRecord(createdData);
+      // return extractRecord(createdData);
+      return createdData.toObject({ versionKey: false });
     } catch (e) {
       const errorCode = parseInt(e.code, 10);
 

@@ -8,6 +8,7 @@ function appError(errorMessage, errorCode = 'ERR', options = {}) {
   const error = new Error(errorMessage);
   error.isApplicationError = true;
   error.errorCode = errorCode;
+  error.code = options.code;
 
   if (options.context) {
     error.context = options.context;
